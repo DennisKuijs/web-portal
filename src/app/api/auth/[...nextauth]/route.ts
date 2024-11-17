@@ -1,6 +1,6 @@
+import { createUser, userExists } from "@/app/actions/actions";
 import NextAuth from "next-auth";
 import SteamProvider, { PROVIDER_ID } from 'next-auth-steam';
-
 import type { NextRequest } from "next/server";
 
 async function handler(req: NextRequest, ctx: { params: { nextauth: string[] }}) {
@@ -13,16 +13,24 @@ async function handler(req: NextRequest, ctx: { params: { nextauth: string[] }})
             })
         ],
         callbacks: {
-            jwt({ token, account, profile }) {
+            async jwt({ token, account, profile }) {
                 if(account?.provider === PROVIDER_ID) {
-                    token.steam = profile
+
+                    let user : any[] = await userExists(profile?.steamid as string);
+                    
+                    if(user) {
+                        user = await createUser(profile);
+                    }
+
+                    // token.user = user;
+
                 }
                 return token;
             },
             session({ session, token }) {
-                if (token.steam) {
+                if (token.user) {
                     // @ts-expect-error
-                    session.user.steam = token.steam;
+                    session.user.steam = token.user;
                 }
                 return session
             }

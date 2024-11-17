@@ -2,6 +2,7 @@ import Link from "next/link";
 import SteamLoginButton from "./SteamLoginButton";
 import { getServerSession } from "next-auth";
 import UserProfile from "./UserProfile";
+import UserBalance from "./UserBalance";
 
 const Navbar = async () => {
 
@@ -14,7 +15,8 @@ const Navbar = async () => {
               <Link href="/" className="font-semibold">
               Trading<span className="text-green-500">Portal</span>
               </Link>
-              <div className="h-full flex items-center space-x-4">
+              <div className="h-full flex items-center space-x-6">
+                <UserBalance/>
                 <UserProfile user={user}/>
               </div>
           </div>
