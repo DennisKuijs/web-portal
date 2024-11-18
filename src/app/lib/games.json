@@ -1,0 +1,12 @@
+[
+    {
+        "id": 1,
+        "name": "CSGO",
+        "imgPath": "/img/counter-strike.png"
+    },
+    {
+        "id": 2,
+        "name": "TF2",
+        "imgPath": "/img/team-fortress-2-logo.png"
+    }
+]

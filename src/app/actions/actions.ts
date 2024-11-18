@@ -9,9 +9,10 @@ const User = dynamoose.model("users", userSchema, {
 });
 
 export async function createUser(user: any) {
+    console.log(user);
     const newUser = new User({
-        steamid: user.steamid,
-        username: user.personaname,
+        steamId: user.steamid,
+        userName: user.personaname,
         profileurl: user.profileurl,
         avatar: user.avatarfull,
         balance: 0,
@@ -21,8 +22,7 @@ export async function createUser(user: any) {
 
     try {
         await newUser.save();
-        console.log("New user has succesfully been saved");
-        return newUser;
+        return newUser.toJSON();
     } catch (error) {
         console.error(error);
         throw error;

@@ -1,7 +1,30 @@
 import { createUser, userExists } from "@/app/actions/actions";
-import NextAuth from "next-auth";
+import NextAuth, { DefaultSession } from "next-auth";
 import SteamProvider, { PROVIDER_ID } from 'next-auth-steam';
 import type { NextRequest } from "next/server";
+
+export type Profile = {
+    steamId: String,
+    userName: String,
+    profileurl: String,
+    avatar: String,
+    balance: Number,
+    email: String,
+    tradeUrl: String,
+    createdAt: Number,
+    updatedAt: Number
+}
+
+export type User = {
+    id: String,
+    profile: Number
+} & DefaultSession["user"];
+
+declare module "next-auth" {
+    interface Session extends DefaultSession {
+        user: User;
+    }
+}
 
 async function handler(req: NextRequest, ctx: { params: { nextauth: string[] }}) {
     return NextAuth(req, ctx, {
@@ -16,22 +39,17 @@ async function handler(req: NextRequest, ctx: { params: { nextauth: string[] }})
             async jwt({ token, account, profile }) {
                 if(account?.provider === PROVIDER_ID) {
 
-                    let user : any[] = await userExists(profile?.steamid as string);
-                    
-                    if(user) {
-                        user = await createUser(profile);
+                    const userId = token.sub as string;
+                    token.profile = await userExists(userId);
+
+                    if (token.profile.length == 0) {
+                        token.profile = await createUser(profile)
                     }
-
-                    // token.user = user;
-
                 }
                 return token;
             },
             session({ session, token }) {
-                if (token.user) {
-                    // @ts-expect-error
-                    session.user.steam = token.user;
-                }
+                session.user.profile = 1;
                 return session
             }
         }
