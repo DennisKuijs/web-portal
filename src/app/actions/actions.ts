@@ -39,3 +39,14 @@ export async function userExists(sid: string) {
     }
 }
 
+export async function fetchUserInventory(sid: string, app_id: number, context_id: number) {
+    try {
+        const response = await fetch(`http://steamcommunity.com/inventory/${sid}/${app_id}/${context_id}`);
+        const inventory = await response.json();
+        return JSON.stringify(inventory);
+    } catch (error) {
+        console.log(error);
+        throw error;
+    }
+}
+

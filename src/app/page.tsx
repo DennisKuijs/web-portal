@@ -1,11 +1,9 @@
-import GameSelector from "./ui/GameSelector";
-import Inventory from "./ui/Inventory";
+import UserTrade from "./ui/UserTrade";
 
 export default function Home() {
   return (
     <main>
-      <GameSelector/>
-      <Inventory/>
+      <UserTrade/>
     </main>
   );
 }

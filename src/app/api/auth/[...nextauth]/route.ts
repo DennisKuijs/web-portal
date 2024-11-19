@@ -49,7 +49,7 @@ async function handler(req: NextRequest, ctx: { params: { nextauth: string[] }})
                 return token;
             },
             session({ session, token }) {
-                session.user.profile = 1;
+                session.user.profile = token;
                 return session
             }
         }
