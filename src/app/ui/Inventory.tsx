@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../context/GameContext";
 import { fetchUserInventory } from "../actions/actions";
 import { useSession } from "next-auth/react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 
 const Inventory = () => {
@@ -27,15 +27,23 @@ const Inventory = () => {
     }, [selectedGame, setSelectedGame])
 
     return (
-        <div className="p-4 flex justify-center">
-            {inventory.map((item : any) => (
-                <Card className="w-[250px]" key={item.classid}>
-                    <CardContent>
-                        <Image width={100} height={100} alt={item.name} src={`http://cdn.steamcommunity.com/economy/image/${item.icon_url}`}/>
-                    </CardContent>
-                </Card>
-            ))}
-        </div>
+        <Card className="w-[600px]">
+            <CardHeader>
+                <CardTitle>Selecteer je items</CardTitle>
+                <CardDescription>Selecteer de items die je wilt verkopen</CardDescription>
+            </CardHeader>
+            <CardContent>
+                <div className="grid grid-cols-3 gap-8">
+                    {inventory.map((item : any) => (
+                        <Card className="w-[150px] bg-slate-50" key={item.classid}>
+                            <CardContent>
+                                <Image width={100} height={100} alt={item.name} src={`http://cdn.steamcommunity.com/economy/image/${item.icon_url}`}/>
+                            </CardContent>
+                        </Card>
+                    ))}
+                </div>
+            </CardContent>
+        </Card>
     )
 }
 

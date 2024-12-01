@@ -2,13 +2,13 @@
     {
         "id": 1,
         "name": "CSGO",
-        "imgPath": "/img/counter-strike.png",
-        "app_id": 730
+        "img": "/img/counter-strike.png",
+        "app_id": "730"
     },
     {
         "id": 2,
         "name": "TF2",
-        "imgPath": "/img/team-fortress-2-logo.png",
-        "app_id": 440
+        "img": "/img/team-fortress-2-logo.png",
+        "app_id": "440"
     }
 ]
