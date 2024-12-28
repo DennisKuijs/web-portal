@@ -1,18 +1,34 @@
-import { getServerSession } from "next-auth";
+'use client';
+
 import { User } from "./ui/User";
 import { Bot } from "./ui/Bot";
+import { useSession } from "next-auth/react";
+import { useEffect } from 'react';
+import io from 'socket.io-client';
 
-export default async function Home() {
+export default function Home() {
 
-  const user = await getServerSession();
+  const user = useSession();
+
+  useEffect(() => {
+    const socket = io();
+    
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <main className="min-h-screen flex flex-col md:flex-row">
       {user ? <>
-        <section className="flex-1 flex flex-col justify-between gap-y-8 p-8">
+        <section className="flex-1 flex flex-col p-8 gap-y-4">
           <User/>
         </section>
-        <section className="flex-1 flex flex-col p-6">
+        <section className="flex-1 flex flex-col p-8 gap-y-4">
           <Bot/>
         </section>
       </> : <></>}

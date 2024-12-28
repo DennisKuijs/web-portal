@@ -19,7 +19,7 @@ export const GameSelector = () => {
             <CardContent>
                 <div className="p-4 flex justify-start gap-x-12">
                     {GamesList.map((game) => (
-                        <Card className={`cursor-pointer w-[150px] flex justify-center items-center bg-slate-50 ${selectedGame === game.app_id ? 'border-2 border-green-500' : ''}`} onClick={() => setSelectedGame(game.app_id)}>
+                        <Card className={`cursor-pointer w-[150px] flex justify-center items-center bg-slate-50 ${selectedGame === game.app_id ? 'border-2 border-green-500' : ''}`} key={game.app_id} onClick={() => setSelectedGame(game.app_id)}>
                             <CardContent className="py-2 mb-0 flex flex-col items-center justify-center">
                                 <Image width={150} height={150} alt={game.name} src={game.img}/>
                             </CardContent>
